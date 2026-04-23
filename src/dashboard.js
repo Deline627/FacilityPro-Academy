@@ -81,7 +81,8 @@ function ViewDownloadButtons({ file, label }) {
   function handleDownload() {
     const a = document.createElement("a");
     a.href = file;
-    a.download = label + ".pdf";
+    const ext = file.split(".").pop();
+    a.download = label + "." + ext;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -224,12 +225,13 @@ export function ToolsPage() {
 
 export function TrainerPage() {
   const items = [
-    { title: "Train the Trainer Module",       desc: "8-section certification guide",   status: "Available",   file: "/trainer/train-the-trainer-module.pdf"       },
-    { title: "Trainer Observation Checklist",  desc: "72-point scored checklist",        status: "Available",   file: "/trainer/trainer-observation-checklist.pdf"  },
-    { title: "Version Control Protocol",       desc: "11-section document control",      status: "Available",   file: "/trainer/version-control-protocol.pdf"       },
-    { title: "Training Tracker",               desc: "5-sheet Excel tracker",            status: "Available",   file: "/trainer/training-tracker.xlsx"              },
-    { title: "Calibration Videos",             desc: "Correct delivery examples",        status: "Coming Soon", file: null },
-    { title: "Update Briefings",               desc: "Change notifications",             status: "Coming Soon", file: null },
+    { title: "Train the Trainer Module",    desc: "8-section certification guide with observation checklist",          status: "Available",   file: "/trainer/Train_the_Trainer_Module_v4.pdf"         },
+    { title: "Version Control Protocol",    desc: "11-section document control system",                               status: "Available",   file: "/trainer/Version_Control_Protocol_v4.pdf"         },
+    { title: "Training Tracker Explainer",  desc: "How to use the 5-sheet tracker — facilitator guide",              status: "Available",   file: "/trainer/DVG_Training_Tracker_Explainer_v4.pdf"   },
+    { title: "Training Tracker (Excel)",    desc: "Trainee progress, phase detail, remediation log, dashboard",       status: "Available",   file: "/trainer/DVG_Training_Tracker_v4.xlsx"            },
+    { title: "Training Manual v4",          desc: "Complete 7-phase training manual — trainer reference copy",        status: "Available",   file: "/trainer/FacilityPro_Academy_Training_Manual_v4.pdf" },
+    { title: "Calibration Videos",         desc: "Correct delivery examples",                                        status: "Coming Soon", file: null },
+    { title: "Update Briefings",            desc: "Change notifications",                                             status: "Coming Soon", file: null },
   ];
   return (
     <div style={{ animation: "fadeUp 0.4s ease" }}>
