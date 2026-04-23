@@ -1,0 +1,416 @@
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --navy: #1B2A4A;
+  --accent: #2E75B6;
+  --red: #c0392b;
+  --red-light: #fde8e8;
+  --mop-dark: #1a3a5c;
+  --mop-mid: #2980b9;
+  --mop-light: #d6eaf8;
+  --mop-border: #7fb3d8;
+  --green-mid: #27ae60;
+  --green-dark: #1a5c2e;
+  --green-light: #d4edda;
+  --warn-bg: #fff3cd;
+  --warn-border: #e6c200;
+  --warn-text: #6b5900;
+  --white: #ffffff;
+  --gray-light: #f5f5f5;
+  --gray-mid: #e0e0e0;
+  --gray-text: #555;
+  --text: #333;
+}
+.page {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  font-family: var(--font-sans, 'Helvetica Neue', Arial, sans-serif);
+  color: var(--text);
+  padding: 1.5rem 0 1rem;
+}
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-bottom: 0.75rem;
+  border-bottom: 3px solid var(--mop-mid);
+  margin-bottom: 1rem;
+}
+.header-left { flex: 1; }
+.header-tag {
+  display: inline-block;
+  background: var(--navy);
+  color: var(--white);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  padding: 3px 10px;
+  border-radius: 3px;
+  margin-bottom: 6px;
+}
+.header h1 {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--navy);
+  line-height: 1.2;
+}
+.header h1 span {
+  color: var(--mop-mid);
+}
+.header-right {
+  text-align: right;
+  font-size: 10px;
+  color: var(--gray-text);
+  line-height: 1.6;
+}
+.colour-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--mop-light);
+  border: 1px solid var(--mop-mid);
+  border-radius: 4px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--mop-dark);
+  margin-top: 4px;
+}
+.colour-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--mop-mid);
+  border: 1px solid var(--mop-dark);
+}
+.phase {
+  border: 1px solid var(--gray-mid);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.phase-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--white);
+}
+.phase-prep .phase-header { background: var(--accent); }
+.phase-clean .phase-header { background: var(--mop-dark); }
+.phase-finish .phase-header { background: var(--navy); }
+.phase-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.phase-body { padding: 8px 10px; }
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.step:last-child { border-bottom: none; }
+.step-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--white);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.phase-prep .step-num { background: var(--accent); }
+.phase-clean .step-num { background: var(--mop-mid); }
+.phase-finish .step-num { background: var(--navy); }
+.step-content { flex: 1; }
+.step-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--navy);
+  line-height: 1.3;
+}
+.step-desc {
+  font-size: 10.5px;
+  color: var(--gray-text);
+  line-height: 1.4;
+  margin-top: 2px;
+}
+.arrow-connector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2px;
+  align-self: center;
+}
+.arrow-svg { width: 20px; height: 40px; }
+.bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.rules-box {
+  border: 2px solid var(--red);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.rules-header {
+  background: var(--red-light);
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--red);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.rules-body {
+  padding: 8px 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 16px;
+}
+.rule-item {
+  font-size: 10.5px;
+  color: var(--text);
+  padding: 3px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  line-height: 1.4;
+}
+.rule-bullet {
+  color: var(--red);
+  font-weight: 500;
+  flex-shrink: 0;
+  font-size: 11px;
+}
+.verify-box {
+  border: 2px solid var(--mop-mid);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.verify-header {
+  background: var(--mop-light);
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--mop-dark);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.verify-body { padding: 8px 12px; }
+.verify-item {
+  font-size: 10.5px;
+  color: var(--text);
+  padding: 3px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  line-height: 1.4;
+}
+.check-box {
+  width: 13px;
+  height: 13px;
+  border: 1.5px solid var(--mop-mid);
+  border-radius: 2px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  padding-top: 6px;
+  border-top: 1px solid var(--gray-mid);
+  font-size: 9px;
+  color: #aaa;
+}
+</style>
+
+<div class="page">
+  <div class="header">
+    <div class="header-left">
+      <div class="header-tag">STAGE 4 — SERVICE DELIVERY</div>
+      <h1>Wet workflow — <span>Mopping SOP</span></h1>
+      <div style="font-size:11px;color:var(--navy);margin-top:6px;font-weight:500;letter-spacing:0.02em;">Stage sequence: Kitchens <span style="color:var(--mop-mid);font-size:13px;">&rarr;</span> Bathrooms <span style="color:var(--mop-mid);font-size:13px;">&rarr;</span> Glass <span style="color:var(--mop-mid);font-size:13px;">&rarr;</span> <span style="text-decoration:underline;text-underline-offset:3px;">Mopping</span></div>
+      <div style="font-size:10px;color:var(--gray-text);margin-top:2px;">8-step mopping procedure — final task in the wet workflow, every time, no exceptions</div>
+    </div>
+    <div class="header-right">
+      <div class="colour-badge"><div class="colour-dot"></div> Mop &amp; bucket — correct floor cleaner</div>
+      <div style="margin-top:4px;">FacilityPro Academy | v4.0</div>
+      <div>Laminate and display on site</div>
+    </div>
+  </div>
+
+  <!-- WET FLOOR SAFETY BANNER -->
+  <div style="display:flex;align-items:center;gap:10px;background:var(--warn-bg);border:1.5px solid var(--warn-border);border-radius:6px;padding:7px 14px;margin-bottom:10px;">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="flex-shrink:0;"><path d="M10 2L18 17H2Z" stroke="#7a6400" stroke-width="1.5" fill="none" stroke-linejoin="round"/><line x1="10" y1="8" x2="10" y2="12" stroke="#7a6400" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="14.5" r="0.8" fill="#7a6400"/></svg>
+    <div style="font-size:12px;font-weight:500;color:var(--warn-text);">WET FLOOR SAFETY STANDARD — Place wet floor signs BEFORE mopping. Remove ONLY when fully dry. No exceptions.</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:0;margin-bottom:12px;">
+    <!-- PREP PHASE -->
+    <div class="phase phase-prep">
+      <div class="phase-header">
+        <div class="phase-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="1" width="10" height="14" rx="1.5" stroke="white" stroke-width="1.2"/><line x1="5.5" y1="5" x2="10.5" y2="5" stroke="white" stroke-width="1"/><line x1="5.5" y1="7.5" x2="10.5" y2="7.5" stroke="white" stroke-width="1"/><line x1="5.5" y1="10" x2="8.5" y2="10" stroke="white" stroke-width="1"/></svg>
+        </div>
+        PREP
+      </div>
+      <div class="phase-body">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-title">Confirm all prior wet stages are complete</div>
+            <div class="step-desc">Kitchens, bathrooms, and glass must be fully signed off before mopping begins. Do not mop any area that has not been cleaned and verified. Mopping is always the final task.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-title">Prepare mop equipment and floor cleaner</div>
+            <div class="step-desc">Fill mop bucket with correct pre-filled floor cleaner. Confirm mop head is clean and in good condition. Place wet floor signs at all entry points to the area being mopped before any mopping begins.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Arrow -->
+    <div class="arrow-connector">
+      <svg class="arrow-svg" viewBox="0 0 20 40"><path d="M2 20 L16 20" stroke="var(--mop-mid)" stroke-width="2" fill="none"/><path d="M12 14 L18 20 L12 26" stroke="var(--mop-mid)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+    <!-- CLEAN PHASE -->
+    <div class="phase phase-clean">
+      <div class="phase-header">
+        <div class="phase-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2 L8 10" stroke="white" stroke-width="1.5" stroke-linecap="round"/><path d="M5 10 L8 10 L11 10" stroke="white" stroke-width="1.2" stroke-linecap="round"/><path d="M5 10 L4 14" stroke="white" stroke-width="1" stroke-linecap="round"/><path d="M8 10 L8 14" stroke="white" stroke-width="1" stroke-linecap="round"/><path d="M11 10 L12 14" stroke="white" stroke-width="1" stroke-linecap="round"/></svg>
+        </div>
+        CLEAN
+      </div>
+      <div class="phase-body">
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-title">Mop all hard floors — back-to-front using figure-8 motion</div>
+            <div class="step-desc">Begin at the far end of the space and work toward the exit. Use overlapping figure-8 passes for maximum coverage. Maintain consistent pressure and overlapping passes — do not leave gaps. Do not re-enter mopped areas.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-title">Rinse mop head every 2–3 passes</div>
+            <div class="step-desc">Rinse mop head in clean water regularly. A dirty mop spreads contamination — not cleaning. If water becomes dirty, STOP and change immediately. Do not continue mopping with soiled water.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <div class="step-title">Change mop water between zones</div>
+            <div class="step-desc">Change mop water between kitchens, washrooms, and general floor areas. Do not carry contaminated water between zones. Refill with correct pre-filled floor cleaner each time.</div>
+          </div>
+        </div>
+        <div style="margin-top:4px;padding:4px 8px;background:var(--red-light);border:1px solid var(--red);border-radius:4px;font-size:10px;font-weight:500;color:var(--red);text-align:center;">Do NOT mop any area until vacuuming and all surface cleaning is complete</div>
+      </div>
+    </div>
+
+    <!-- Arrow -->
+    <div class="arrow-connector">
+      <svg class="arrow-svg" viewBox="0 0 20 40"><path d="M2 20 L16 20" stroke="var(--mop-mid)" stroke-width="2" fill="none"/><path d="M12 14 L18 20 L12 26" stroke="var(--mop-mid)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+    <!-- FINISH PHASE -->
+    <div class="phase phase-finish">
+      <div class="phase-header">
+        <div class="phase-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5 L6 11.5 L13 4.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        FINISH
+      </div>
+      <div class="phase-body">
+        <div class="step">
+          <div class="step-num">6</div>
+          <div class="step-content">
+            <div class="step-title">Inspect all mopped floors for streaks, pooling, or missed areas</div>
+            <div class="step-desc">Walk the perimeter of each mopped area. Check for visible mop streaks, pooling water, or missed sections. Check edges and corners for missed areas. Re-mop any area that does not meet standard.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">7</div>
+          <div class="step-content">
+            <div class="step-title">Confirm wet floor signs are placed and visible from all entry points</div>
+            <div class="step-desc">All wet floor signs must remain in place until floors are completely dry. Do not remove signs early. Ensure signs are visible from ALL entry points — not just the main entrance. This is a safety requirement.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">8</div>
+          <div class="step-content">
+            <div class="step-title">Restore layout, complete final verification, and sign off</div>
+            <div class="step-desc">Return all items to original positions. Confirm no equipment left in mopped areas. Conduct final visual inspection under available light. Sign off mopping zone — this is the final task before Stage 5.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom row -->
+  <div class="bottom-row">
+    <div class="rules-box">
+      <div class="rules-header">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L13 12H1Z" stroke="#c0392b" stroke-width="1.2" fill="none"/><line x1="7" y1="5.5" x2="7" y2="8.5" stroke="#c0392b" stroke-width="1.2" stroke-linecap="round"/><circle cx="7" cy="10" r="0.6" fill="#c0392b"/></svg>
+        Non-negotiable rules
+      </div>
+      <div class="rules-body">
+        <div class="rule-item"><span class="rule-bullet">&bull;</span> Mop is ALWAYS the final task — no exceptions</div>
+        <div class="rule-item"><span class="rule-bullet">&bull;</span> Do NOT mop before vacuuming is complete</div>
+        <div class="rule-item"><span class="rule-bullet">&bull;</span> Do NOT re-enter mopped areas</div>
+        <div class="rule-item"><span class="rule-bullet">&bull;</span> Change mop water between zones</div>
+        <div class="rule-item"><span class="rule-bullet">&bull;</span> Wet floor signs placed BEFORE mopping begins</div>
+        <div class="rule-item"><span class="rule-bullet">&bull;</span> Do NOT remove signs until floor is fully dry</div>
+        <div class="rule-item"><span class="rule-bullet">&bull;</span> Do NOT use dirty or contaminated mop water</div>
+        <div class="rule-item"><span class="rule-bullet">&bull;</span> Work back-to-front toward exit — always</div>
+        <div class="rule-item"><span class="rule-bullet">&bull;</span> Do NOT leave mop streaks or uneven finish</div>
+        <div class="rule-item"><span class="rule-bullet">&bull;</span> Do NOT mop over areas not yet vacuumed</div>
+      </div>
+    </div>
+
+    <div class="verify-box">
+      <div class="verify-header">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="var(--mop-dark)" stroke-width="1.2"/><path d="M4 7L6 9L10 5" stroke="var(--mop-dark)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Final verification — before leaving mopped area
+      </div>
+      <div class="verify-body">
+        <div class="verify-item"><div class="check-box"></div> All floors mopped — no missed areas</div>
+        <div class="verify-item"><div class="check-box"></div> No visible mop streaks or residue</div>
+        <div class="verify-item"><div class="check-box"></div> No pooling water anywhere</div>
+        <div class="verify-item"><div class="check-box"></div> Floor drying evenly — uniform appearance</div>
+        <div class="verify-item"><div class="check-box"></div> No footprints or re-entry marks on mopped areas</div>
+        <div class="verify-item"><div class="check-box"></div> Mop water changed between zones</div>
+        <div class="verify-item"><div class="check-box"></div> Wet floor signs in place and visible from all entry points</div>
+        <div class="verify-item"><div class="check-box"></div> No equipment left in mopped areas</div>
+        <div class="verify-item"><div class="check-box"></div> Floor passes visual inspection under light</div>
+        <div class="verify-item"><div class="check-box"></div> All items returned to correct position</div>
+        <div class="verify-item"><div class="check-box"></div> Wet floor signs removed only after floor is fully dry</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>FacilityPro Academy Ltd</span>
+    <span>Platform: ConnectTeams (until Eagle IO launch)</span>
+    <span>Aligned to DVG 5-Stage System v4.0</span>
+  </div>
+</div>

@@ -1,0 +1,421 @@
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --navy: #1B2A4A;
+  --accent: #2E75B6;
+  --red: #c0392b;
+  --glass-dark: #3a3a3a;
+  --glass-mid: #888;
+  --glass-light: #f0f0f0;
+  --glass-border: #bbb;
+  --green-mid: #27ae60;
+  --green-dark: #1a5c2e;
+  --green-light: #d4edda;
+  --white: #ffffff;
+  --gray-light: #f5f5f5;
+  --gray-mid: #e0e0e0;
+  --gray-text: #555;
+  --text: #333;
+}
+.page {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  font-family: var(--font-sans, 'Helvetica Neue', Arial, sans-serif);
+  color: var(--text);
+  padding: 1.5rem 0 1rem;
+}
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-bottom: 0.75rem;
+  border-bottom: 3px solid var(--accent);
+  margin-bottom: 1rem;
+}
+.header-left { flex: 1; }
+.header-tag {
+  display: inline-block;
+  background: var(--navy);
+  color: var(--white);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  padding: 3px 10px;
+  border-radius: 3px;
+  margin-bottom: 6px;
+}
+.header h1 {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--navy);
+  line-height: 1.2;
+}
+.header h1 span {
+  color: var(--accent);
+}
+.header-right {
+  text-align: right;
+  font-size: 10px;
+  color: var(--gray-text);
+  line-height: 1.6;
+}
+.colour-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--glass-light);
+  border: 1px solid var(--glass-border);
+  border-radius: 4px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--glass-dark);
+  margin-top: 4px;
+}
+.colour-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1.5px solid #999;
+}
+.phase {
+  border: 1px solid var(--gray-mid);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.phase-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--white);
+}
+.phase-prep .phase-header { background: var(--accent); }
+.phase-clean .phase-header { background: var(--glass-dark); }
+.phase-finish .phase-header { background: var(--navy); }
+.phase-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.phase-body { padding: 8px 10px; }
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.step:last-child { border-bottom: none; }
+.step-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--white);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.phase-prep .step-num { background: var(--accent); }
+.phase-clean .step-num { background: var(--glass-dark); }
+.phase-finish .step-num { background: var(--navy); }
+.step-content { flex: 1; }
+.step-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--navy);
+  line-height: 1.3;
+}
+.step-desc {
+  font-size: 10.5px;
+  color: var(--gray-text);
+  line-height: 1.4;
+  margin-top: 2px;
+}
+.cloth-tag {
+  display: inline-block;
+  font-size: 9.5px;
+  font-weight: 500;
+  padding: 1px 7px;
+  border-radius: 3px;
+  margin-left: 4px;
+  vertical-align: middle;
+  background: var(--glass-light);
+  color: var(--glass-dark);
+  border: 1px solid var(--glass-border);
+}
+.arrow-connector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2px;
+  align-self: center;
+}
+.arrow-svg { width: 20px; height: 40px; }
+.bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.rules-box {
+  border: 2px solid var(--red);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.rules-header {
+  background: #fde8e8;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--red);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.rules-body {
+  padding: 8px 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 16px;
+}
+.rule-item {
+  font-size: 10.5px;
+  color: var(--text);
+  padding: 3px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  line-height: 1.4;
+}
+.rule-bullet {
+  color: var(--red);
+  font-weight: 500;
+  flex-shrink: 0;
+  font-size: 11px;
+}
+.verify-box {
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.verify-header {
+  background: #e8f1fa;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.verify-body { padding: 8px 12px; }
+.verify-item {
+  font-size: 10.5px;
+  color: var(--text);
+  padding: 3px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  line-height: 1.4;
+}
+.check-box {
+  width: 13px;
+  height: 13px;
+  border: 1.5px solid var(--accent);
+  border-radius: 2px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  padding-top: 6px;
+  border-top: 1px solid var(--gray-mid);
+  font-size: 9px;
+  color: #aaa;
+}
+</style>
+
+<div class="page">
+  <div class="header">
+    <div class="header-left">
+      <div class="header-tag">STAGE 4 — SERVICE DELIVERY</div>
+      <h1>Wet workflow — <span>Glass SOP</span></h1>
+      <div style="font-size:11px;color:var(--navy);margin-top:6px;font-weight:500;letter-spacing:0.02em;">Stage sequence: Kitchens <span style="color:var(--accent);font-size:13px;">&rarr;</span> Bathrooms <span style="color:var(--accent);font-size:13px;">&rarr;</span> <span style="text-decoration:underline;text-underline-offset:3px;">Glass</span> <span style="color:var(--accent);font-size:13px;">&rarr;</span> Mopping</div>
+      <div style="font-size:10px;color:var(--gray-text);margin-top:2px;">8-step glass procedure — execute in order, every time, no exceptions</div>
+    </div>
+    <div class="header-right">
+      <div class="colour-badge"><div class="colour-dot"></div> WHITE cloth only</div>
+      <div style="margin-top:4px;">FacilityPro Academy | v4.0</div>
+      <div>Laminate and display on site</div>
+    </div>
+  </div>
+
+  <!-- NO STREAKS BANNER -->
+  <div style="display:flex;align-items:center;gap:10px;background:#e8f1fa;border:1.5px solid var(--accent);border-radius:6px;padding:7px 14px;margin-bottom:10px;">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="flex-shrink:0;"><rect x="3" y="2" width="14" height="16" rx="1.5" stroke="var(--navy)" stroke-width="1.5" fill="none"/><line x1="6" y1="7" x2="14" y2="7" stroke="var(--navy)" stroke-width="1" opacity="0.4"/><line x1="6" y1="10" x2="14" y2="10" stroke="var(--navy)" stroke-width="1" opacity="0.4"/><line x1="6" y1="13" x2="11" y2="13" stroke="var(--navy)" stroke-width="1" opacity="0.4"/><path d="M12 12 L14.5 14.5 L18 9" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    <div style="font-size:12px;font-weight:500;color:var(--navy);">NO STREAKS STANDARD — Glass must pass visual inspection at 45° angle under available light</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:0;margin-bottom:12px;">
+    <!-- PREP PHASE -->
+    <div class="phase phase-prep">
+      <div class="phase-header">
+        <div class="phase-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="1" width="10" height="14" rx="1.5" stroke="white" stroke-width="1.2"/><line x1="5.5" y1="5" x2="10.5" y2="5" stroke="white" stroke-width="1"/><line x1="5.5" y1="7.5" x2="10.5" y2="7.5" stroke="white" stroke-width="1"/><line x1="5.5" y1="10" x2="8.5" y2="10" stroke="white" stroke-width="1"/></svg>
+        </div>
+        PREP
+      </div>
+      <div class="phase-body">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-title">Clear access to all glass surfaces</div>
+            <div class="step-desc">Remove all obstacles from in front of glass panels, partitions, windows, and mirrors. Ensure full visibility and unobstructed access to every glass surface in scope.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-title">Prepare glass cleaning tools <span class="cloth-tag">WHITE cloth</span></div>
+            <div class="step-desc">Confirm WHITE microfibre glass cloth is clean and dry. Prepare glass cleaner spray bottle. Prepare squeegee if required for large panels. Do not use cloths from any other zone.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Arrow -->
+    <div class="arrow-connector">
+      <svg class="arrow-svg" viewBox="0 0 20 40"><path d="M2 20 L16 20" stroke="var(--accent)" stroke-width="2" fill="none"/><path d="M12 14 L18 20 L12 26" stroke="var(--accent)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+    <!-- CLEAN PHASE -->
+    <div class="phase phase-clean">
+      <div class="phase-header">
+        <div class="phase-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="4" y="2" width="8" height="12" rx="1" stroke="white" stroke-width="1.2" fill="none"/><line x1="6" y1="5" x2="10" y2="5" stroke="white" stroke-width="0.8" opacity="0.6"/><line x1="6" y1="7.5" x2="10" y2="7.5" stroke="white" stroke-width="0.8" opacity="0.6"/><line x1="6" y1="10" x2="10" y2="10" stroke="white" stroke-width="0.8" opacity="0.6"/></svg>
+        </div>
+        CLEAN
+      </div>
+      <div class="phase-body">
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-title">Apply glass cleaner to surface <span class="cloth-tag">WHITE cloth</span></div>
+            <div class="step-desc">Spray glass cleaner sparingly — do not oversaturate. Excess spray creates streaks and overspray onto surrounding surfaces. One to two sprays per panel is sufficient.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-title">Wipe glass in consistent vertical passes — do not change direction mid-clean</div>
+            <div class="step-desc">Wipe in overlapping vertical passes from top to bottom. Do not change direction mid-clean — inconsistent patterns leave visible streaks. Cover the full surface including edges.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <div class="step-title">Buff glass to a completely dry finish — no moisture, streaks, or lint</div>
+            <div class="step-desc">Using a dry section of the WHITE cloth, buff the entire surface to remove all moisture, streaks, and smears. Glass must be completely dry — no residue, no lint, no marks.</div>
+          </div>
+        </div>
+        <div style="margin-top:4px;padding:4px 8px;background:var(--green-light);border-radius:4px;font-size:10px;font-weight:500;color:var(--green-dark);text-align:center;">Complete all glass before moving to mopping stage</div>
+      </div>
+    </div>
+
+    <!-- Arrow -->
+    <div class="arrow-connector">
+      <svg class="arrow-svg" viewBox="0 0 20 40"><path d="M2 20 L16 20" stroke="var(--accent)" stroke-width="2" fill="none"/><path d="M12 14 L18 20 L12 26" stroke="var(--accent)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+    <!-- FINISH PHASE -->
+    <div class="phase phase-finish">
+      <div class="phase-header">
+        <div class="phase-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5 L6 11.5 L13 4.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        FINISH
+      </div>
+      <div class="phase-body">
+        <div class="step">
+          <div class="step-num">6</div>
+          <div class="step-content">
+            <div class="step-title">Detail all edges, corners, and frames</div>
+            <div class="step-desc">Check and wipe all glass edges, corners, frames, and handles for residue, cleaner drips, or overspray. Edges are where streaks collect — do not skip them.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">7</div>
+          <div class="step-content">
+            <div class="step-title">Inspect glass at 45° angle under available light</div>
+            <div class="step-desc">Step to the side and view every glass surface at a 45-degree angle. Check under natural or artificial light for streaks, smears, fingerprints, or lint. Re-clean any surface that does not pass.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">8</div>
+          <div class="step-content">
+            <div class="step-title">Restore layout, complete final verification, and sign off</div>
+            <div class="step-desc">Return all items moved during Step 1 to original positions. Confirm no overspray on surrounding surfaces. Conduct final visual check. Sign off glass zone before proceeding to mopping.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom row -->
+  <div class="bottom-row">
+    <div class="rules-box">
+      <div class="rules-header">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L13 12H1Z" stroke="#c0392b" stroke-width="1.2" fill="none"/><line x1="7" y1="5.5" x2="7" y2="8.5" stroke="#c0392b" stroke-width="1.2" stroke-linecap="round"/><circle cx="7" cy="10" r="0.6" fill="#c0392b"/></svg>
+        Non-negotiable rules
+      </div>
+      <div class="rules-body">
+        <div class="rule-item"><span class="rule-bullet">&bull;</span> WHITE cloth only for all glass surfaces</div>
+        <div class="rule-item"><span class="rule-bullet">&bull;</span> Do NOT use dirty or damp cloths</div>
+        <div class="rule-item"><span class="rule-bullet">&bull;</span> Do NOT overspray cleaner</div>
+        <div class="rule-item"><span class="rule-bullet">&bull;</span> Always buff to a completely dry finish</div>
+        <div class="rule-item"><span class="rule-bullet">&bull;</span> Clean edges and frames — not just glass centre</div>
+        <div class="rule-item"><span class="rule-bullet">&bull;</span> Do NOT leave streaks, smears, or lint</div>
+        <div class="rule-item"><span class="rule-bullet">&bull;</span> Replace cloth if it becomes damp or dirty</div>
+        <div class="rule-item"><span class="rule-bullet">&bull;</span> Do NOT clean glass with a damp or saturated cloth</div>
+        <div class="rule-item"><span class="rule-bullet">&bull;</span> Do NOT use glass spray on anti-glare screens</div>
+      </div>
+    </div>
+
+    <div class="verify-box">
+      <div class="verify-header">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="var(--navy)" stroke-width="1.2"/><path d="M4 7L6 9L10 5" stroke="var(--navy)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Final verification — before leaving glass zone
+      </div>
+      <div class="verify-body">
+        <div class="verify-item"><div class="check-box"></div> Glass streak-free under direct light</div>
+        <div class="verify-item"><div class="check-box"></div> No smears or fingerprints visible</div>
+        <div class="verify-item"><div class="check-box"></div> Edges and corners clean — no residue</div>
+        <div class="verify-item"><div class="check-box"></div> Frames and handles wiped</div>
+        <div class="verify-item"><div class="check-box"></div> No lint or cloth residue on any surface</div>
+        <div class="verify-item"><div class="check-box"></div> Glass passes inspection at 45° angle</div>
+        <div class="verify-item"><div class="check-box"></div> No streaks visible from multiple viewing angles</div>
+        <div class="verify-item"><div class="check-box"></div> Surrounding surfaces not affected by overspray</div>
+        <div class="verify-item"><div class="check-box"></div> Area left clean and dry</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>FacilityPro Academy Ltd</span>
+    <span>Platform: ConnectTeams (until Eagle IO launch)</span>
+    <span>Aligned to DVG 5-Stage System v4.0</span>
+  </div>
+</div>

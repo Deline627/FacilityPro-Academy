@@ -1,3 +1,4 @@
+import { useState } from "react";
 
 const ALL_NAV = [
   { id: "home",    label: "Home",     icon: "⌂" },
@@ -17,18 +18,18 @@ export function hasTrainerAccess(role) {
 }
 
 const SOPS = [
-  { title: "Dry General Cleaning",   icon: "🧹", desc: "Blue cloth, dusting sequence, left-to-right pattern, edges-first vacuuming", color: "#2E75B6" },
-  { title: "Kitchen Cleaning",       icon: "🍳", desc: "Green cloth, 30-second dwell time, 8-step process, sanitise all surfaces",   color: "#27AE60" },
-  { title: "Washroom Cleaning",      icon: "🚿", desc: "Red/Yellow/White cloths, 60-second dwell, high-to-low direction",             color: "#C0392B" },
-  { title: "Glass & Mirror Cleaning",icon: "✨", desc: "White cloth, vertical passes, multi-angle inspection, no-streak standard",    color: "#6C63FF" },
-  { title: "Mopping",                icon: "🧽", desc: "Final wet task, figure-8 technique, dirty water hard-stop, no re-entry rule", color: "#D4800A" },
+  { title: "Dry General Cleaning",    icon: "🧹", desc: "Blue cloth, dusting sequence, left-to-right pattern, edges-first vacuuming", color: "#2E75B6", file: "/sops/dry-general-cleaning.html" },
+  { title: "Kitchen Cleaning",        icon: "🍳", desc: "Green cloth, 30-second dwell time, 8-step process, sanitise all surfaces",   color: "#27AE60", file: "/sops/kitchen-cleaning.html" },
+  { title: "Washroom Cleaning",       icon: "🚿", desc: "Red/Yellow/White cloths, 60-second dwell, high-to-low direction",             color: "#C0392B", file: "/sops/washroom-cleaning.html" },
+  { title: "Glass & Mirror Cleaning", icon: "✨", desc: "White cloth, vertical passes, multi-angle inspection, no-streak standard",    color: "#6C63FF", file: "/sops/glass-mirror-cleaning.html" },
+  { title: "Mopping",                 icon: "🧽", desc: "Final wet task, figure-8 technique, dirty water hard-stop, no re-entry rule", color: "#D4800A", file: "/sops/mopping.html" },
 ];
 
 const TOOLS = [
-  { title: "Pocket Reference Card",       icon: "📋", desc: "5-Stage Sequence, callout scripts, 10-minute rule, colour coding, dwell times, no-go criteria" },
-  { title: "Dwell Time Reference Card",   icon: "⏱",  desc: "Full chemical/dwell time table with non-negotiable rules for every DVG-approved product" },
-  { title: "Reinforcement Card Template", icon: "📝", desc: "3 procedures, self-check questions, observation task, trainer sign-off" },
-  { title: "Field Execution Sheet",       icon: "📄", desc: "5-Stage DO/VERIFY checklists, variance decision tree, job info, sign-off section" },
+  { title: "Pocket Reference Card",       icon: "📋", desc: "5-Stage Sequence, callout scripts, 10-minute rule, colour coding, dwell times, no-go criteria", file: "/tools/pocket-reference-card.docx" },
+  { title: "Dwell Time Reference Card",   icon: "⏱",  desc: "Full chemical/dwell time table with non-negotiable rules for every DVG-approved product",       file: "/tools/dwell-time-reference-card.docx" },
+  { title: "Reinforcement Card Template", icon: "📝", desc: "3 procedures, self-check questions, observation task, trainer sign-off",                         file: "/tools/reinforcement-card-template.docx" },
+  { title: "Field Execution Sheet",       icon: "📄", desc: "5-Stage DO/VERIFY checklists, variance decision tree, job info, sign-off section",               file: "/tools/field-execution-sheet.docx" },
 ];
 
 function ProgressBar({ pct, light }) {
@@ -47,6 +48,60 @@ function StatusBadge({ status }) {
   };
   const s = styles[status] || styles.locked;
   return <span style={{ fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 20, background: s.bg, color: s.color }}>{s.text}</span>;
+}
+
+function SOPViewer({ sop, onClose }) {
+  return (
+    <div style={{ position: "fixed", inset: 0, zIndex: 1000, background: "#000", display: "flex", flexDirection: "column" }}>
+      <div style={{ background: "#1B2A4A", padding: "10px 16px", display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <div style={{ width: 32, height: 32, borderRadius: 8, background: sop.color, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>{sop.icon}</div>
+          <div style={{ fontSize: 14, fontWeight: 600, color: "#fff" }}>{sop.title}</div>
+        </div>
+        <button
+          onClick={onClose}
+          style={{ background: "rgba(255,255,255,0.15)", color: "#fff", border: "1px solid rgba(255,255,255,0.25)", borderRadius: 20, padding: "7px 16px", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "inherit" }}
+        >
+          ✕ Close
+        </button>
+      </div>
+      <iframe
+        src={sop.file}
+        title={sop.title}
+        style={{ flex: 1, border: "none", width: "100%", background: "#fff" }}
+      />
+    </div>
+  );
+}
+
+function ViewDownloadButtons({ file, label }) {
+  function handleView() {
+    window.open(file, "_blank", "noopener,noreferrer");
+  }
+  function handleDownload() {
+    const a = document.createElement("a");
+    a.href = file;
+    a.download = label;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+  return (
+    <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
+      <button
+        onClick={handleView}
+        style={{ flex: 1, padding: "8px", background: "#1B2A4A", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "inherit" }}
+      >
+        View
+      </button>
+      <button
+        onClick={handleDownload}
+        style={{ flex: 1, padding: "8px", background: "#fff", color: "#1B2A4A", border: "1px solid #1B2A4A", borderRadius: 8, fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "inherit" }}
+      >
+        Download
+      </button>
+    </div>
+  );
 }
 
 export function HomePage({ user, completedPhases, setPage, openPhase, allPhases }) {
@@ -122,23 +177,27 @@ export function PathwayPage({ completedPhases, openPhase, allPhases }) {
 }
 
 export function SOPPage() {
+  const [selectedSOP, setSelectedSOP] = useState(null);
   return (
-    <div style={{ animation: "fadeUp 0.4s ease" }}>
-      <h2 style={{ fontSize: 20, fontWeight: 700, color: "#1B2A4A", marginBottom: 4 }}>SOP Library</h2>
-      <p style={{ fontSize: 13, color: "#666", marginBottom: 16, lineHeight: 1.5 }}>Field reference system for quick on-site lookup.</p>
-      {SOPS.map((sop, i) => (
-        <div key={i} style={{ background: "#fff", borderRadius: 12, border: "1px solid #d8d5ce", padding: "14px 16px", marginBottom: 10, cursor: "pointer" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <div style={{ width: 42, height: 42, borderRadius: 10, background: sop.color, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0 }}>{sop.icon}</div>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 14, fontWeight: 700, color: "#1B2A4A" }}>{sop.title}</div>
-              <div style={{ fontSize: 12, color: "#555", lineHeight: 1.4, marginTop: 2 }}>{sop.desc}</div>
+    <>
+      {selectedSOP && <SOPViewer sop={selectedSOP} onClose={() => setSelectedSOP(null)} />}
+      <div style={{ animation: "fadeUp 0.4s ease" }}>
+        <h2 style={{ fontSize: 20, fontWeight: 700, color: "#1B2A4A", marginBottom: 4 }}>SOP Library</h2>
+        <p style={{ fontSize: 13, color: "#666", marginBottom: 16, lineHeight: 1.5 }}>Tap any card to open the full visual SOP guide.</p>
+        {SOPS.map((sop, i) => (
+          <div key={i} onClick={() => setSelectedSOP(sop)} style={{ background: "#fff", borderRadius: 12, border: "1px solid #d8d5ce", padding: "14px 16px", marginBottom: 10, cursor: "pointer" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <div style={{ width: 42, height: 42, borderRadius: 10, background: sop.color, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0 }}>{sop.icon}</div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: 14, fontWeight: 700, color: "#1B2A4A" }}>{sop.title}</div>
+                <div style={{ fontSize: 12, color: "#555", lineHeight: 1.4, marginTop: 2 }}>{sop.desc}</div>
+              </div>
+              <div style={{ fontSize: 18, color: "#ccc" }}>›</div>
             </div>
-            <div style={{ fontSize: 18, color: "#ccc" }}>›</div>
           </div>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+    </>
   );
 }
 
@@ -146,7 +205,7 @@ export function ToolsPage() {
   return (
     <div style={{ animation: "fadeUp 0.4s ease" }}>
       <h2 style={{ fontSize: 20, fontWeight: 700, color: "#1B2A4A", marginBottom: 4 }}>Field Tools Hub</h2>
-      <p style={{ fontSize: 13, color: "#666", marginBottom: 16, lineHeight: 1.5 }}>Quick-access tools for mobile use.</p>
+      <p style={{ fontSize: 13, color: "#666", marginBottom: 16, lineHeight: 1.5 }}>View or download quick-reference tools for mobile use.</p>
       {TOOLS.map((tool, i) => (
         <div key={i} style={{ background: "#fff", borderRadius: 12, border: "1px solid #d8d5ce", padding: "14px 16px", marginBottom: 10 }}>
           <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
@@ -154,6 +213,7 @@ export function ToolsPage() {
             <div style={{ flex: 1 }}>
               <div style={{ fontSize: 14, fontWeight: 700, color: "#1B2A4A", marginBottom: 3 }}>{tool.title}</div>
               <div style={{ fontSize: 12, color: "#555", lineHeight: 1.5 }}>{tool.desc}</div>
+              <ViewDownloadButtons file={tool.file} label={tool.title} />
             </div>
           </div>
         </div>
@@ -164,12 +224,12 @@ export function ToolsPage() {
 
 export function TrainerPage() {
   const items = [
-    { title: "Train the Trainer Module",       desc: "8-section certification guide",   status: "Available"   },
-    { title: "Trainer Observation Checklist",  desc: "72-point scored checklist",        status: "Available"   },
-    { title: "Version Control Protocol",       desc: "11-section document control",      status: "Available"   },
-    { title: "Training Tracker",               desc: "5-sheet Excel tracker",            status: "Available"   },
-    { title: "Calibration Videos",             desc: "Correct delivery examples",        status: "Coming Soon" },
-    { title: "Update Briefings",               desc: "Change notifications",             status: "Coming Soon" },
+    { title: "Train the Trainer Module",       desc: "8-section certification guide",   status: "Available",   file: "/trainer/train-the-trainer-module.pdf"       },
+    { title: "Trainer Observation Checklist",  desc: "72-point scored checklist",        status: "Available",   file: "/trainer/trainer-observation-checklist.pdf"  },
+    { title: "Version Control Protocol",       desc: "11-section document control",      status: "Available",   file: "/trainer/version-control-protocol.pdf"       },
+    { title: "Training Tracker",               desc: "5-sheet Excel tracker",            status: "Available",   file: "/trainer/training-tracker.xlsx"              },
+    { title: "Calibration Videos",             desc: "Correct delivery examples",        status: "Coming Soon", file: null },
+    { title: "Update Briefings",               desc: "Change notifications",             status: "Coming Soon", file: null },
   ];
   return (
     <div style={{ animation: "fadeUp 0.4s ease" }}>
@@ -179,13 +239,16 @@ export function TrainerPage() {
         <div style={{ fontSize: 13, color: "#c8d6e5", lineHeight: 1.5 }}>For certified trainers and training supervisors only.</div>
       </div>
       {items.map((item, i) => (
-        <div key={i} style={{ background: "#fff", borderRadius: 12, border: "1px solid #d8d5ce", padding: "12px 16px", marginBottom: 8, opacity: item.status === "Coming Soon" ? 0.6 : 1 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <div>
+        <div key={i} style={{ background: "#fff", borderRadius: 12, border: "1px solid #d8d5ce", padding: "14px 16px", marginBottom: 8, opacity: item.status === "Coming Soon" ? 0.6 : 1 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+            <div style={{ flex: 1 }}>
               <div style={{ fontSize: 14, fontWeight: 600, color: "#1B2A4A" }}>{item.title}</div>
               <div style={{ fontSize: 12, color: "#666" }}>{item.desc}</div>
+              {item.status === "Available" && item.file && (
+                <ViewDownloadButtons file={item.file} label={item.title} />
+              )}
             </div>
-            <span style={{ fontSize: 11, fontWeight: 600, padding: "3px 10px", borderRadius: 20, background: item.status === "Available" ? "#d4edda" : "#fff3cd", color: item.status === "Available" ? "#1A5C2E" : "#7A6400" }}>{item.status}</span>
+            <span style={{ fontSize: 11, fontWeight: 600, padding: "3px 10px", borderRadius: 20, background: item.status === "Available" ? "#d4edda" : "#fff3cd", color: item.status === "Available" ? "#1A5C2E" : "#7A6400", flexShrink: 0, marginLeft: 12 }}>{item.status}</span>
           </div>
         </div>
       ))}
