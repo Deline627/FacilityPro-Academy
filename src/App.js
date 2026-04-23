@@ -8,7 +8,7 @@ import Phase5 from "./phases/Phase5";
 import Phase6 from "./phases/Phase6";
 import Phase7 from "./phases/Phase7";
 import { AuthScreen } from "./auth";
-import { HomePage, PathwayPage, SOPPage, ToolsPage, TrainerPage, BottomNav, hasTrainerAccess } from "./dashboard";
+import { HomePage, PathwayPage, SOPPage, ToolsPage, TrainerPage, ReinforcementZonePage, BottomNav, hasTrainerAccess } from "./dashboard";
 import WelcomeScreen from "./WelcomeScreen";
 import {
   onAuthChange,
@@ -135,6 +135,8 @@ export default function App() {
         return <ToolsPage />;
       case "trainer":
         return hasTrainerAccess(user.role) ? <TrainerPage /> : null;
+      case "zone":
+        return <ReinforcementZonePage />;
       default:
         return null;
     }
