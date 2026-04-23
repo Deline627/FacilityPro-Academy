@@ -26,10 +26,10 @@ const SOPS = [
 ];
 
 const TOOLS = [
-  { title: "Pocket Reference Card",       icon: "📋", desc: "5-Stage Sequence, callout scripts, 10-minute rule, colour coding, dwell times, no-go criteria", file: "/tools/pocket-reference-card.docx" },
-  { title: "Dwell Time Reference Card",   icon: "⏱",  desc: "Full chemical/dwell time table with non-negotiable rules for every DVG-approved product",       file: "/tools/dwell-time-reference-card.docx" },
-  { title: "Reinforcement Card Template", icon: "📝", desc: "3 procedures, self-check questions, observation task, trainer sign-off",                         file: "/tools/reinforcement-card-template.docx" },
-  { title: "Field Execution Sheet",       icon: "📄", desc: "5-Stage DO/VERIFY checklists, variance decision tree, job info, sign-off section",               file: "/tools/field-execution-sheet.docx" },
+  { title: "Pocket Reference Card",       icon: "📋", desc: "5-Stage Sequence, callout scripts, 10-minute rule, colour coding, dwell times, no-go criteria", file: "/tools/pocket-reference-card.pdf" },
+  { title: "Dwell Time Reference Card",   icon: "⏱",  desc: "Full chemical/dwell time table with non-negotiable rules for every DVG-approved product",       file: "/tools/dwell-time-reference-card.pdf" },
+  { title: "Reinforcement Card Template", icon: "📝", desc: "3 procedures, self-check questions, observation task, trainer sign-off",                         file: "/tools/reinforcement-card-template.pdf" },
+  { title: "Field Execution Sheet",       icon: "📄", desc: "5-Stage DO/VERIFY checklists, variance decision tree, job info, sign-off section",               file: "/tools/field-execution-sheet.pdf" },
 ];
 
 function ProgressBar({ pct, light }) {
@@ -81,7 +81,7 @@ function ViewDownloadButtons({ file, label }) {
   function handleDownload() {
     const a = document.createElement("a");
     a.href = file;
-    a.download = label;
+    a.download = label + ".pdf";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
